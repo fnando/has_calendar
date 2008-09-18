@@ -38,8 +38,6 @@ module SimplesIdeias
             memo[stamp] << record
             memo
           end
-          
-          debugger
         end
       
         # building the calendar
