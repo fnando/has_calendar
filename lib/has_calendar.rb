@@ -1,38 +1,13 @@
 module SimplesIdeias
   module Calendar
-    module ActiveRecord
-      def self.included(base)
-        base.extend ClassMethods
-        
-        class << base
-          attr_accessor :has_calendar_options
-        end
-      end
-      
-      module ClassMethods
-        def has_calendar(attribute = :created_at)
-          include SimplesIdeias::Calendar::ActiveRecord::InstanceMethods
-          
-          self.has_calendar_options = {
-            :attribute => attribute
-          }
-        end
-      end
-      
-      module InstanceMethods
-        def to_calendar
-          @to_calendar ||= send(self.class.has_calendar_options[:attribute]).to_date.to_s(:number)
-        end
-      end
-    end
-    
     module ActionView
       def calendar(options={}, &block)
         options = {
           :year => Date.today.year,
           :month => Date.today.month,
           :today => 'Today',
-          :events => nil
+          :events => nil,
+          :field => :created_at
         }.merge(options)
       
         cmd = 'cal '
@@ -56,13 +31,15 @@ module SimplesIdeias
         end
         
         # group all records if data is provided
-        records = {}
-        
         if options[:events]
-          options[:events].each do |record|
-            records[record.to_calendar] ||= []
-            records[record.to_calendar] << record
+          records = options[:events].inject({}) do |memo, record|
+            stamp = record.send(options[:field]).to_date.to_s(:number)
+            memo[stamp] ||= []
+            memo[stamp] << record
+            memo
           end
+          
+          debugger
         end
       
         # building the calendar

@@ -32,24 +32,23 @@ or, if you want to register some events:
 	<% end %>
 
 As you can see, this will hit your database up to 31 times (one hit for each 
-day) if you don't optimize it. Fortunately, you can use the ActiveRecord method
-`has_calendar`:
-
-	class Schedule < ActiveRecord::Base
-	  has_calendar :created_at
-	end
-
-This call inserts a new method `to_calendar` that gets the attribute
-`created_at` and converts it using the `to_s(:number)` date method. This method
-is used to group all records that are passed as the option `:events`. So,
-instead of receiving a date, you receive a date plus all the records for that 
-specific day. Your view will look like this:
+day) if you don't optimize it. Fortunately, you can use the options `:events`:
 
 	<% calendar :events => Schedule.all do |date, events| %>
 		<% for event in events %>
 			<%= link_to event.title, event_path(event) %>
 		<% end %>
 	<% end %>
+
+By default, each record will use the `created_at` attribute as date grouping. 
+You can specify a different attribute with the option `:field`:
+
+	<% calendar :events => Schedule.all, :field => :scheduled_at do |date, events| %>
+		<!-- do something -->
+	<% end %>
+
+Formatting the calendar
+-----------------------
 
 You can use this CSS to start:
 
