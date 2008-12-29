@@ -51,7 +51,9 @@ module SimplesIdeias
           caption = content_tag(:caption, Date.new(options[:year], options[:month], 1).strftime('%B/%Y'))
         
           head = content_tag(:thead) do
-            (0..6).collect { |i| content_tag(:th, (date + i.days).strftime('%a')) } * ""
+            content_tag(:tr) do
+              (0..6).collect { |i| content_tag(:th, (date + i.days).strftime('%a')) } * ""
+            end
           end
         
           # then get the body
