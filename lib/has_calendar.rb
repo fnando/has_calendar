@@ -5,9 +5,10 @@ module SimplesIdeias
         options = {
           :year => Date.today.year,
           :month => Date.today.month,
-          :today => 'Today',
+          :today => nil,
           :events => nil,
-          :field => :created_at
+          :field => :created_at,
+          :header_format => :day_name
         }.merge(options)
       
         cmd = 'cal '
@@ -52,7 +53,7 @@ module SimplesIdeias
         
           head = content_tag(:thead) do
             content_tag(:tr) do
-              (0..6).collect { |i| content_tag(:th, (date + i.days).strftime('%a')) } * ""
+              (0..6).collect { |i| content_tag(:th, l(date + i.days, :format => options[:header_format])) } * ""
             end
           end
         
@@ -81,7 +82,7 @@ module SimplesIdeias
                 end
               
                 cols << content_tag(:td, col_options) do
-                  day = options[:today] if date == today
+                  day = options[:today] if options[:today] && date == today
                   span = content_tag(:span, day)
                   span + events
                 end

@@ -47,6 +47,11 @@ You can specify a different attribute with the option `:field`:
 		<!-- do something -->
 	<% end %>
 
+By default, has_calendar will look for a date format called ':day_name' to use on the
+header of the calendar, you can change it using the :header_format option:
+
+        <%= calendar :header_format => :short_day_name %>
+
 Formatting the calendar
 -----------------------
 
