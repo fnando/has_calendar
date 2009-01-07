@@ -52,6 +52,11 @@ header of the calendar, you can change it using the :header_format option:
 
         <%= calendar :header_format => :short_day_name %>
 
+You can also change the caption provided by has_calendar (that defaults to the
+:default format):
+
+        <%= calendar :header_format => :short_day_name, :caption_format => :month_year %>
+
 Formatting the calendar
 -----------------------
 

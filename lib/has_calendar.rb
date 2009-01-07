@@ -8,7 +8,8 @@ module SimplesIdeias
           :today => nil,
           :events => nil,
           :field => :created_at,
-          :header_format => :day_name
+          :header_format => :day_name,
+          :caption_format => :default
         }.merge(options)
       
         cmd = 'cal '
@@ -49,7 +50,7 @@ module SimplesIdeias
           date = today.beginning_of_week
           date = date - 1.day if RUBY_PLATFORM =~ /darwin/
         
-          caption = content_tag(:caption, Date.new(options[:year], options[:month], 1).strftime('%B/%Y'))
+          caption = content_tag(:caption, l(Date.new(options[:year], options[:month], today.day), :format => options[:caption_format]))
         
           head = content_tag(:thead) do
             content_tag(:tr) do
