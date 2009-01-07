@@ -109,4 +109,9 @@ TO-DO
 
 - Write some specs as soon as possible!
 
+Contributors
+------------
+
+* Carlos Júnior (xjunior) <carlos@milk-it.net>
+
 Copyright (c) 2008 Nando Vieira, released under the MIT license
