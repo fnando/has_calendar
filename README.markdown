@@ -1,7 +1,7 @@
-has_calendar
+ha\_calendar
 ============
 
-has_calendar is a view helper that creates a calendar using a table. You can 
+has\_calendar is a view helper that creates a calendar using a table. You can 
 easily add events with any content.
 
 This plugin relies on the `cal` command, available on *nix systems. Instead 
@@ -47,16 +47,25 @@ You can specify a different attribute with the option `:field`:
 		<!-- do something -->
 	<% end %>
 
-By default, has_calendar will look for a date format called ':day_name' to use on the
+By default, has\_calendar will look for a date format called `:day\_of\_week` to use on the
 header of the calendar, you can change it using the :header_format option:
 
         <%= calendar :header_format => :short_day_name %>
 
-You can also change the caption provided by has_calendar (that defaults to the
+You can also change the caption provided by has\_calendar (that defaults to the
 :default format):
 
         <%= calendar :header_format => :short_day_name, :caption_format => :month_year %>
 
+To set formats do something like this:
+
+	Date::DATE_FORMATS[:short_day_name] = '%a' # => (Sun..Sat)
+
+Or on your locale file, if your application is internationalized.
+
+You can set the HTML id:
+	<%= calendar :id => 'cal' %>
+	
 Formatting the calendar
 -----------------------
 

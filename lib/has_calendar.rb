@@ -8,8 +8,9 @@ module SimplesIdeias
           :today => nil,
           :events => nil,
           :field => :created_at,
-          :header_format => :day_name,
-          :caption_format => :default
+          :header_format => :day_of_week,
+          :caption_format => :default,
+          :id => "calendar"
         }.merge(options)
       
         cmd = 'cal '
@@ -43,8 +44,7 @@ module SimplesIdeias
         end
       
         # building the calendar
-        contents = content_tag(:table, :id => 'calendar') do
-        
+        contents = content_tag(:table, :id => options[:id], :class => 'calendar') do
           # first, get the header
           today = Date.today
           date = today.beginning_of_week
@@ -69,7 +69,7 @@ module SimplesIdeias
                 unless day.blank?
                   date = Date.new(options[:year], options[:month], day.to_i)
                   col_options[:class] << ' today' if today == date
-                  col_options[:class] << ' weekday' if [0,6].include?(date.wday)
+                  col_options[:class] << ' weekend' if [0,6].include?(date.wday)
                 end
               
                 if block_given? && !day.blank?
@@ -94,7 +94,8 @@ module SimplesIdeias
           caption + head + rows
         end
       
-        concat(contents, block.binding) if block_given?
+        concat(contents) if block_given?        
+        
         contents
       end
     end
