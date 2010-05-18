@@ -17,7 +17,7 @@ module SimplesIdeias
         cmd << '-m ' unless RUBY_PLATFORM =~ /darwin/
       
         # execute the command
-        output = IO.popen("#{cmd} #{options[:month]} #{options[:year]}").read
+        output = IO.popen("#{cmd} #{options[:month]} #{options[:year]}") {|f| f.read}
       
         # get calendar lines
         io = StringIO.new(output)
