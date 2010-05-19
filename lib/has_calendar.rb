@@ -22,7 +22,7 @@ module SimplesIdeias
         # get calendar lines
         io = StringIO.new(output)
         lines = io.readlines
-        lines = lines[2, lines.size-3]
+        lines = lines[2, lines.size-2]
         lines.map!(&:chomp)
       
         # strip spaces from each day and group them
@@ -61,6 +61,8 @@ module SimplesIdeias
           # then get the body
           rows = ""
           days.in_groups_of(7, "") do |group|
+            # skip rows that don't have any days
+            next unless group.inject(false) {|m, x| m || !x.blank?}
             rows << content_tag(:tr) do
               group.inject("") do |cols, day|
                 col_options = {:class => 'day'}
