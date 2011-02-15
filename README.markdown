@@ -1,4 +1,4 @@
-ha\_calendar
+has\_calendar
 ============
 
 has\_calendar is a view helper that creates a calendar using a table. You can 
