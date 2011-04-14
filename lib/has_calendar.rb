@@ -36,11 +36,13 @@ module SimplesIdeias
         # group all records if data is provided
         if options[:events]
           records = options[:events].inject({}) do |memo, record|
-            stamp = record.send(options[:field]).to_date.to_s(:number)
-            memo[stamp] ||= []
-            memo[stamp] << record
-            memo
-          end
+            unless record.send(options[:field]).nil?
+              stamp = record.send(options[:field]).to_date.to_s(:number)
+              memo[stamp] ||= []
+              memo[stamp] << record
+            end  
+	    memo
+	  end
         end
       
         # building the calendar
