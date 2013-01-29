@@ -13,25 +13,9 @@ module SimplesIdeias
           :id => "calendar"
         }.merge(options)
 
-        cmd = 'cal '
-        cmd << '-m ' unless RUBY_PLATFORM =~ /darwin/
-
-        # execute the command
-        output = IO.popen("#{cmd} #{options[:month]} #{options[:year]}") {|f| f.read}
-
-        # get calendar lines
-        io = StringIO.new(output)
-        lines = io.readlines
-        lines = lines[2, lines.size-2]
-        lines.map!(&:chomp)
-
-        # strip spaces from each day and group them
-        days = lines.inject([]) do |holder, line|
-          0.step(line.size, 3) do |n|
-            holder << line[n, 3].squish
-          end
-          holder
-        end
+        date, days = Date.new(options[:year], options[:month]), []
+        date.beginning_of_month.cwday.times { days << '' }
+        date.end_of_month.day.times { |i| days << i + 1 }
 
         # group all records if data is provided
         if options[:events]
