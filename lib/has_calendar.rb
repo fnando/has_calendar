@@ -85,7 +85,9 @@ module SimplesIdeias
           caption + head + rows
         end
 
-        concat(contents) if block_given?
+        if Rails::VERSION::MAJOR < 3
+          concat(contents) if block_given?
+        end
 
         contents
       end
